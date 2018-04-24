@@ -2,6 +2,16 @@ import chalk from 'chalk';
 import stringWidth from 'string-width';
 
 export function displaySyntaxError(error) {
+	switch(error.type) {
+		case "InvalidToken":
+		case "InvalidChar":
+			// TODO handle
+			break;
+
+		default:
+			console.error(error);
+	}
+
 	const errorPre = `${error.row} |    ` +
 		error.text.slice(0, error.column).replace(/\s+/, '');
 
@@ -15,4 +25,12 @@ export function displaySyntaxError(error) {
 	return error.message + '\n' +
 		errorText + '\n' +
 		' '.repeat(stringWidth(errorPre) - 1) + '^^^';
-}
+};
+
+export function getInvalidTokenError(token) {
+	const error = new Error(`Unexpected token: ${endToken.string}`);
+	error.type = 'InvalidToken';
+	error.token = endToken;
+
+	return token;
+};

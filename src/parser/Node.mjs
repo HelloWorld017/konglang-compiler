@@ -4,7 +4,11 @@ class Node {
 		this.connection = {};
 	}
 
-	connectTo(name, target) {
+	setValue(value) {
+		this.value = value;
+	}
+
+	connect(name, target) {
 		if(!this.connection[name]) {
 			this.connection[name] = [];
 		}

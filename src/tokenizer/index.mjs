@@ -1,21 +1,20 @@
-import {displaySyntaxError} from "../utils/";
-
+import TokenizerOperator from "./TokenizerOperator";
 import TokenizerSingle from "./TokenizerSingle";
 import TokenizerRegex from "./TokenizerRegex";
 
 const tokenizers = [
 	new TokenizerRegex('Whitespace', /^\s+/),
-	new TokenizerSingle('LoopOpen', '['),
-	new TokenizerSingle('LoopClose', ']'),
+	new TokenizerRegex('Number', /^2+/),
+	new TokenizerOperator(),
+	new TokenizerSingle('Hash', '#'),
 	new TokenizerSingle('AssignmentLeft', '{'),
 	new TokenizerSingle('AssignmentRight', '}'),
+	new TokenizerSingle('LoopOpen', '['),
+	new TokenizerSingle('LoopClose', ']'),
 	new TokenizerSingle('TransmitterOpen', '<'),
 	new TokenizerSingle('TransmitterClose', '>'),
 	new TokenizerSingle('ReceiverOpen', '('),
-	new TokenizerSingle('ReceiverClose', ')'),
-	new TokenizerSingle('Hash', '#'),
-	new TokenizerRegex('Operator', /^[\+\-\*\/]/),
-	new TokenizerRegex('Number', /^2+/)
+	new TokenizerSingle('ReceiverClose', ')')
 ];
 
 const tokenizeLine = (text, line, debug=false) => {
@@ -32,7 +31,11 @@ const tokenizeLine = (text, line, debug=false) => {
 			const extracted = text.substr(0, length);
 
 			text = text.slice(length);
-			tokens.push(token);
+
+			if(token.name !== 'Whitespace') {
+				token.mapCode(line + 1, i, length);
+				tokens.push(token);
+			}
 
 			i += length;
 
@@ -48,7 +51,7 @@ const tokenizeLine = (text, line, debug=false) => {
 			error.row = line + 1;
 			error.column = i;
 			error.text = originalText;
-			error.toString = () => displaySyntaxError(error);
+			error.type = 'InvalidChar';
 
 			throw error;
 		}
@@ -61,5 +64,7 @@ export default function tokenize(text, debug=false) {
 	const tokens = [];
 
 	const lines = text.split(/(\r|\n|\r\n)/);
-	return lines.map((text, line) => tokenizeLine(text, line, debug));
+	return lines
+		.map((text, line) => tokenizeLine(text, line, debug))
+		.reduce((prev, curr) => prev.concat(curr), []);
 };
