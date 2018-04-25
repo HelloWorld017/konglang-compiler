@@ -3,6 +3,7 @@ class Token {
 		this.name = name;
 		this.string = string;
 		this.attribute = {};
+		this.type = 'Token';
 	}
 
 	setAttribute(key, value) {

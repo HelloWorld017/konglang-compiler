@@ -8,19 +8,29 @@ class ParserExpression extends Parser {
 		super('Expression');
 	}
 
+	isStartOf(tokens, index) {
+		const {name} = tokens[index];
+
+		if(name === 'Number' || name === 'Transmitter') return true;
+		return false;
+	}
+
 	parse(tokens, start, parsers, debug=false) {
 		// Converting infix to postfix notation
 
 		const operators = [];
-		const postfix = [];
+		let postfix = [];
 		let isExpressionPart = true;
+		let end = -1;
 
 		for(let i = start; isExpressionPart; i++) {
-			const token = tokens[i];
-			switch(tokens[i].name) {
+			let token = tokens[i];
+			switch(token ? token.name : undefined) {
 				case 'Number':
-					tokens[i] = new Node('Number');
-					tokens[i].setValue(parseInt(tokens[i].string));
+					if(token.type === 'Token') {
+						token = new Node('Number', token);
+						token.setValue(parseInt(tokens[i].string));
+					}
 					// Proceed to Transmitter
 
 				case 'Transmitter':
@@ -48,12 +58,15 @@ class ParserExpression extends Parser {
 					break;
 
 				default:
-					throw getInvalidTokenError(token);
+					isExpressionPart = false;
+					end = i - 1;
 			}
 		}
 
+		postfix = postfix.concat(operators.reverse());
+
 		if(debug) {
-			console.log(postfix.concat(operators.reverse()).map(v => v.string));
+			console.log(postfix.map(v => v.string));
 		}
 
 		const treeStack = [];
@@ -70,15 +83,25 @@ class ParserExpression extends Parser {
 			const childA = treeStack.pop();
 			const childB = treeStack.pop();
 
-			const operatorNode = new Node('Operator');
+			const operatorNode = new Node('Operator', token);
 			operatorNode.setValue(token.string);
-			operatorNode.connect('Operand', childA);
 			operatorNode.connect('Operand', childB);
+			operatorNode.connect('Operand', childA);
 
 			treeStack.push(operatorNode);
 		}
 
-		//TODO check result and return
+		if(treeStack.length > 1) {
+			throw getInvalidTokenError(treeStack[1]);
+		}
+
+		const expressionNode = new Node('Expression');
+		expressionNode.connect('Expression', treeStack[0]);
+
+		return {
+			node: expressionNode,
+			end
+		};
 	}
 }
 

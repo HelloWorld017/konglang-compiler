@@ -1,8 +1,10 @@
+import Token from "./Token";
 import TokenizerOperator from "./TokenizerOperator";
 import TokenizerSingle from "./TokenizerSingle";
 import TokenizerRegex from "./TokenizerRegex";
 
 const tokenizers = [
+	new TokenizerRegex('NewLine', /^(\r\n|\r|\n)/),
 	new TokenizerRegex('Whitespace', /^\s+/),
 	new TokenizerRegex('Number', /^2+/),
 	new TokenizerOperator(),

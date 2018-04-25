@@ -1,15 +1,22 @@
-import tokenize from "./tokenizer";
+import fs from "fs";
 import parse from "./parser";
+import tokenize from "./tokenizer";
+import {toSigmaJson} from "./utils";
 
-let tokens = tokenize(`
+let tokens = parse(tokenize(`
 	(2 - 2) { 2
 	2 + 2 * 2 } (2 + 2)
 	<2 - 2> [
 		(#) { <2 + 2 * 2>
-	]
-`);
+		(2 - 2) { <#>
 
-parse(tokenize('2 + 2 * 22'));
-parse(tokenize('2 + 2 + 22'));
-parse(tokenize('2 * 2 + 22'));
-parse(tokenize('2 / 2 - 222 * 2 - 22'));
+		<2 + 2> [
+			(2 + 2) { 2 - 2
+		]
+	]
+`));
+
+fs.writeFileSync(
+	'./tools/sigma/data.json',
+	JSON.stringify(toSigmaJson(tokens))
+);

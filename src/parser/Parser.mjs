@@ -3,9 +3,13 @@ class Parser {
 		this.name = name;
 	}
 
-	parse(tokens, position) {
+	isStartOf(tokens, index) {
+		return false;
+	}
+
+	parse(tokens, start, parsers, debug=false) {
 		return {
-			position,
+			end: 0,
 			node: [null]
 		};
 	}

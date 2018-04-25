@@ -8,26 +8,43 @@ class ParserReceiver extends Parser {
 		super('Receiver');
 	}
 
+	isStartOf(tokens, index) {
+		const {name} = tokens[index];
+
+		if(name === 'ReceiverOpen') return true;
+		return false;
+	}
+
 	parse(tokens, start, parsers, debug=false) {
-		const {Expression} = parsers;
+		const expression = parsers.get('Expression');
 
 		if(tokens[start].name !== 'ReceiverOpen') {
 			throw getInvalidTokenError(tokens[start]);
 		}
 
-		const {result, end} = Expression.parse(tokens, start + 1, parsers, debug);
+		let node, end;
 
-		const endToken = tokens[end + 1];
-		if(token[end + 1].name !== 'ReceiverClose') {
-			throw getInvalidTokenError(token[end + 1]);
+		if(tokens[start + 1].name === 'Hash') {
+			node = new Node('Hash');
+			end = start + 1;
+		} else {
+			const parsed = expression.parse(tokens, start + 1, parsers, debug);
+
+			node = parsed.node;
+			end = parsed.end;
 		}
 
-		const receiverNode = new Node('Receiver');
-		receiverNode.connect('Pointer', result);
+		const endToken = tokens[end + 1];
+		if(!endToken || tokens[end + 1].name !== 'ReceiverClose') {
+			throw getInvalidTokenError(tokens[end + 1]);
+		}
+
+		const receiverNode = new Node('Receiver', tokens[start]);
+		receiverNode.connect('Pointer', node);
 
 		return {
 			end: end + 1,
-			result: receiverNode
+			node: receiverNode
 		};
 	}
 }
