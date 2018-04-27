@@ -25,7 +25,7 @@ class ParserReceiver extends Parser {
 		let node, end;
 
 		if(tokens[start + 1].name === 'Hash') {
-			node = new Node('Hash');
+			node = new Node('Hash', tokens[start + 1]);
 			end = start + 1;
 		} else {
 			const parsed = expression.parse(tokens, start + 1, parsers, debug);

@@ -26,6 +26,7 @@
   "homepage": "https://github.com/HelloWorld017/konglang-compiler#readme",
   "dependencies": {
     "chalk": "^2.4.0",
+    "split": "^1.0.1",
     "string-width": "^2.1.1"
   }
 }

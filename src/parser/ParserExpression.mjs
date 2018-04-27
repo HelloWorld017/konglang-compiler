@@ -11,7 +11,7 @@ class ParserExpression extends Parser {
 	isStartOf(tokens, index) {
 		const {name} = tokens[index];
 
-		if(name === 'Number' || name === 'Transmitter') return true;
+		if(name === 'Number' || name === 'Transmitter' || name === 'Operator') return true;
 		return false;
 	}
 
@@ -22,6 +22,12 @@ class ParserExpression extends Parser {
 		let postfix = [];
 		let isExpressionPart = true;
 		let end = -1;
+
+		if(token[start].name === 'Operator') {
+			const tempToken = new Node('Number');
+			tempToken.setValue(0);
+			postfix.push(tempToken);
+		}
 
 		for(let i = start; isExpressionPart; i++) {
 			let token = tokens[i];

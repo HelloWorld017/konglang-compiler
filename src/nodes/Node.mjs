@@ -4,6 +4,7 @@ class Node {
 		this.token = token;
 		this.connection = {};
 		this.type = 'Node';
+		this.position = 0;
 	}
 
 	setValue(value) {
@@ -16,6 +17,17 @@ class Node {
 		}
 
 		this.connection[name].push(target);
+	}
+
+	async evaluate(memory, steps=-1) {
+		return {
+			consumeSteps: 0,
+			result: null
+		};
+	}
+
+	updatePosition(newPos) {
+		this.position = newPos;
 	}
 
 	get connectionList() {

@@ -1,6 +1,6 @@
 import {getInvalidTokenError} from "../utils";
 
-import Node from "./Node";
+import NodeAssignment from "./NodeAssignment";
 import Parser from "./Parser";
 
 class ParserAssignment extends Parser {
@@ -33,7 +33,7 @@ class ParserAssignment extends Parser {
 			throw getInvalidTokenError(tokens[start + 1]);
 		}
 
-		const assignmentNode = new Node('Assignment');
+		const assignmentNode = new NodeAssignment(tokens[start + 1]);
 		assignmentNode.connect('Receiver', receiver);
 		assignmentNode.connect('Expression', expression);
 

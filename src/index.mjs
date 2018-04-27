@@ -6,7 +6,7 @@ import {toSigmaJson} from "./utils";
 let tokens = parse(tokenize(`
 	(2 - 2) { 2
 	2 + 2 * 2 } (2 + 2)
-	<2 - 2> [
+	<2 - 2 + <2 + 2>> [
 		(#) { <2 + 2 * 2>
 		(2 - 2) { <#>
 

@@ -1,6 +1,6 @@
 import {getInvalidTokenError} from "../utils";
 
-import Node from "./Node";
+import NodeLoop from "./NodeLoop";
 import Parser from "./Parser";
 
 class ParserLoop extends Parser {
@@ -50,7 +50,7 @@ class ParserLoop extends Parser {
 			}
 		}
 
-		const loopNode = new Node('Loop');
+		const loopNode = new NodeLoop(tokens[start]);
 
 		for(let i = start + 1; i < loopEnd; i++) {
 			if(tokens[i].name !== 'NewLine') {

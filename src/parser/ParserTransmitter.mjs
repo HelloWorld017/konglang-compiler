@@ -29,7 +29,7 @@ class ParserTransmitter extends Parser {
 			if(!tokens[i]) {
 				throw getInvalidTokenError(tokens[start]);
 			}
-			
+
 			if(tokens[i].name === 'TransmitterOpen') {
 				const {end, node} = this.parse(tokens, i, parsers, debug);
 				tokens.splice(i, end - i + 1, node);
@@ -44,7 +44,7 @@ class ParserTransmitter extends Parser {
 		let node, end;
 
 		if(tokens[start + 1].name === 'Hash') {
-			node = new Node('Hash');
+			node = new Node('Hash', tokens[start + 1]);
 			end = start + 1;
 		} else {
 			const parsed = expression.parse(tokens, start + 1, parsers, debug);
