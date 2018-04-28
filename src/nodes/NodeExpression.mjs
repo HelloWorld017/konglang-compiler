@@ -5,13 +5,14 @@ class NodeExpression extends Node {
 		super('Expression', token);
 	}
 
-	async evaluate(memory, steps=-1) {
+	async evaluate(memory, steps=-1, resume=false) {
 		const valueNode = this.connection.Expression[0];
-		const {result} = await valueNode.evaluate(memory, steps);
+		const {result} = await valueNode.evaluate(memory, steps, resume);
 
 		return {
 			consumeSteps: 0,
-			result
+			result,
+			notFinished: false
 		};
 	}
 }

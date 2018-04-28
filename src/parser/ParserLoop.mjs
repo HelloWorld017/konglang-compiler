@@ -1,6 +1,6 @@
 import {getInvalidTokenError} from "../utils";
 
-import NodeLoop from "./NodeLoop";
+import NodeLoop from "../nodes/NodeLoop";
 import Parser from "./Parser";
 
 class ParserLoop extends Parser {

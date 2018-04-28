@@ -1,17 +1,17 @@
 import Node from "./Node";
 
-class NodeNumber extends Node {
+class NodeHash extends Node {
 	constructor(token) {
-		super('Number', token);
+		super('Hash', token);
 	}
 
 	async evaluate() {
 		return {
 			consumeSteps: 0,
-			result: this.value,
+			result: 'Hash',
 			notFinished: false
 		};
 	}
 }
 
-export default NodeNumber;
+export default NodeHash;

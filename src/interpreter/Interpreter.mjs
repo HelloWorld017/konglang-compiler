@@ -1,20 +1,25 @@
+import State from "./State";
+
 class Interpreter {
-	constructor(program) {
+	constructor(program, debug=false) {
 		this.program = program;
-		this.memory = [];
-		this.position = null;
+		this.memory = new State(debug);
 	}
 
-	run() {
-		this.position = this.program.connectionList[0];
-
-		while(this.position) {
-			this.step();
-		}
+	attachStdio() {
+		this.memory.attachStdio();
 	}
 
-	step() {
-		
+	async run() {
+		await this.program.evaluate(this.memory);
+	}
+
+	init() {
+		this.program.position = 0;
+	}
+
+	async step(step) {
+		await this.program.evaluate(this.memory, step, true);
 	}
 }
 

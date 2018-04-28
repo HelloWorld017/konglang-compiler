@@ -5,18 +5,19 @@ class NodeAssignment extends Node {
 		super('Assignment', token);
 	}
 
-	async evaluate(memory, steps=-1) {
+	async evaluate(memory, steps=-1, resume=false) {
 		const receiverNode = this.connection.Receiver[0];
 		const expressionNode = this.connection.Expression[0];
 
-		const {result} = await expressionNode.evaluate(memory, steps);
-		const receiver = (await receiverNode.evaluate(memory, steps)).result;
+		const {result} = await expressionNode.evaluate(memory, steps, resume);
+		const receiver = (await receiverNode.evaluate(memory, steps, resume)).result;
 
 		memory.set(receiver, result);
 
 		return {
 			consumeSteps: 1,
-			result: null
+			result: null,
+			notFinished: false
 		};
 	}
 }

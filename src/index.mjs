@@ -1,22 +1,20 @@
 import fs from "fs";
+import Interpreter from "./interpreter/Interpreter";
 import parse from "./parser";
 import tokenize from "./tokenizer";
 import {toSigmaJson} from "./utils";
 
-let tokens = parse(tokenize(`
-	(2 - 2) { 2
-	2 + 2 * 2 } (2 + 2)
-	<2 - 2 + <2 + 2>> [
-		(#) { <2 + 2 * 2>
-		(2 - 2) { <#>
+const debugMode = false;
+const program = parse(tokenize(fs.readFileSync('./examples/hello.kong', 'utf8'), debugMode), debugMode);
 
-		<2 + 2> [
-			(2 + 2) { 2 - 2
-		]
-	]
-`));
+(async () => {
+	const interpreter = new Interpreter(program, debugMode);
+	interpreter.attachStdio();
+	await interpreter.run();
+	fs.writeFileSync(
+		'./tools/sigma/data.json',
+		JSON.stringify(toSigmaJson(program))
+	);
 
-fs.writeFileSync(
-	'./tools/sigma/data.json',
-	JSON.stringify(toSigmaJson(tokens))
-);
+	process.exit(0);
+})();

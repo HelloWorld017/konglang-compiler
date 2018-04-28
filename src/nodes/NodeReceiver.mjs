@@ -5,22 +5,13 @@ class NodeReceiver extends Node {
 		super('Receiver', token);
 	}
 
-	async evaluate(memory, steps=-1) {
-		let result = null;
-
-		if(this.connection.Pointer[0].name === 'Hash') {
-			result = await new Promise(resolve => {
-				process.stdin.resume();
-				process.stdin.once("data", data => resolve(data));
-			});
-			
-		} else {
-			result = (await this.connection.Pointer[0].evaluate(memory, steps)).result;
-		}
-
+	async evaluate(memory, steps=-1, resume=false) {
+		const {result} = await this.connection.Pointer[0].evaluate(memory, steps, resume);
+		
 		return {
 			consumeSteps: 0,
-			result
+			result,
+			notFinished: false
 		};
 	}
 }

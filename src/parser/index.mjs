@@ -1,4 +1,4 @@
-import Node from "./Node";
+import Program from "../nodes/Program";
 import ParserAssignment from "./ParserAssignment";
 import ParserExpression from "./ParserExpression";
 import ParserLoop from "./ParserLoop";
@@ -27,7 +27,7 @@ export default function parse(tokens, debug=false) {
 		}
 	});
 
-	const programNode = new Node('Program');
+	const programNode = new Program;
 	tokens
 		.filter(v => v.name !== 'NewLine')
 		.forEach(v => programNode.connect('Statements', v));

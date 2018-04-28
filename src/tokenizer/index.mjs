@@ -42,7 +42,7 @@ const tokenizeLine = (text, line, debug=false) => {
 			i += length;
 
 			if(debug) {
-				console.log(`Consumed ${length} by Tokenizer ${tokenizer.name}, Left string: ${text}`);
+				console.log(`[Tokenizing] Consumed ${length} by ${tokenizer.name}, Left string: ${text}`);
 			}
 
 			return true;

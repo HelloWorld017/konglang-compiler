@@ -1,6 +1,6 @@
 import {getInvalidTokenError} from "../utils";
 
-import NodeAssignment from "./NodeAssignment";
+import NodeAssignment from "../nodes/NodeAssignment";
 import Parser from "./Parser";
 
 class ParserAssignment extends Parser {

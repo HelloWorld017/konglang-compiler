@@ -5,9 +5,9 @@ class NodeOperator extends Node {
 		super('Operator', token);
 	}
 
-	async evaluate(memory, steps=-1) {
-		const operandA = (await this.connection.Operand[0].evaluate(memory, steps)).result;
-		const operandB = (await this.connection.Operand[1].evaluate(memory, steps)).result;
+	async evaluate(memory, steps=-1, resume=false) {
+		const operandA = (await this.connection.Operand[0].evaluate(memory, steps, resume)).result;
+		const operandB = (await this.connection.Operand[1].evaluate(memory, steps, resume)).result;
 
 		let result = 0;
 
@@ -28,7 +28,8 @@ class NodeOperator extends Node {
 
 		return {
 			consumeSteps: 0,
-			result: result
+			result: result,
+			notFinished: false
 		};
 	}
 }

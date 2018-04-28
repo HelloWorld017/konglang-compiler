@@ -1,6 +1,8 @@
 import {getInvalidTokenError} from "../utils";
 
-import Node from "./Node";
+import NodeExpression from "../nodes/NodeExpression";
+import NodeNumber from "../nodes/NodeNumber";
+import NodeOperator from "../nodes/NodeOperator";
 import Parser from "./Parser";
 
 class ParserExpression extends Parser {
@@ -23,8 +25,8 @@ class ParserExpression extends Parser {
 		let isExpressionPart = true;
 		let end = -1;
 
-		if(token[start].name === 'Operator') {
-			const tempToken = new Node('Number');
+		if(tokens[start].name === 'Operator') {
+			const tempToken = new NodeNumber();
 			tempToken.setValue(0);
 			postfix.push(tempToken);
 		}
@@ -34,7 +36,7 @@ class ParserExpression extends Parser {
 			switch(token ? token.name : undefined) {
 				case 'Number':
 					if(token.type === 'Token') {
-						token = new Node('Number', token);
+						token = new NodeNumber(token);
 						token.setValue(parseInt(tokens[i].string));
 					}
 					// Proceed to Transmitter
@@ -72,7 +74,7 @@ class ParserExpression extends Parser {
 		postfix = postfix.concat(operators.reverse());
 
 		if(debug) {
-			console.log(postfix.map(v => v.string));
+			console.log('[Expression Parsing]', postfix.map(v => v.string || v.value || v.name));
 		}
 
 		const treeStack = [];
@@ -89,7 +91,7 @@ class ParserExpression extends Parser {
 			const childA = treeStack.pop();
 			const childB = treeStack.pop();
 
-			const operatorNode = new Node('Operator', token);
+			const operatorNode = new NodeOperator(token);
 			operatorNode.setValue(token.string);
 			operatorNode.connect('Operand', childB);
 			operatorNode.connect('Operand', childA);
@@ -101,7 +103,7 @@ class ParserExpression extends Parser {
 			throw getInvalidTokenError(treeStack[1]);
 		}
 
-		const expressionNode = new Node('Expression');
+		const expressionNode = new NodeExpression();
 		expressionNode.connect('Expression', treeStack[0]);
 
 		return {

@@ -1,6 +1,7 @@
 import {getInvalidTokenError} from "../utils";
 
-import Node from "./Node";
+import NodeHash from "../nodes/NodeHash";
+import NodeReceiver from "../nodes/NodeReceiver";
 import Parser from "./Parser";
 
 class ParserReceiver extends Parser {
@@ -25,7 +26,7 @@ class ParserReceiver extends Parser {
 		let node, end;
 
 		if(tokens[start + 1].name === 'Hash') {
-			node = new Node('Hash', tokens[start + 1]);
+			node = new NodeHash(tokens[start + 1]);
 			end = start + 1;
 		} else {
 			const parsed = expression.parse(tokens, start + 1, parsers, debug);
@@ -39,7 +40,7 @@ class ParserReceiver extends Parser {
 			throw getInvalidTokenError(tokens[end + 1]);
 		}
 
-		const receiverNode = new Node('Receiver', tokens[start]);
+		const receiverNode = new NodeReceiver(tokens[start]);
 		receiverNode.connect('Pointer', node);
 
 		return {
