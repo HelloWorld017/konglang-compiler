@@ -1,13 +1,13 @@
 {
   "name": "konglang",
-  "version": "2.2.2",
+  "version": "2.2.22",
   "description": "A standard compiler for kong-lang. A standard compiler for kong-lang.",
   "main": "src/index.mjs",
   "directories": {
     "test": "test"
   },
   "scripts": {
-    "test": "node test"
+    "test": "ava test"
   },
   "repository": {
     "type": "git",
@@ -28,5 +28,8 @@
     "chalk": "^2.4.0",
     "split": "^1.0.1",
     "string-width": "^2.1.1"
+  },
+  "devDependencies": {
+    "ava": "^0.25.0"
   }
 }

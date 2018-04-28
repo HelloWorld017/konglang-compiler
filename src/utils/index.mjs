@@ -37,14 +37,11 @@ export function getInvalidTokenError(token) {
 };
 
 export function toSigmaJson(tree) {
-	const levelIndex = [];
+	let index = 0;
 	const nodes = [];
 	const edges = [];
 
-	const toInternalNode = (level, node) => {
-		if(!levelIndex[level]) levelIndex[level] = 0;
-
-		levelIndex[level]++;
+	const traverse = (node, level=0, prev=undefined) => {
 		let connectionList = node.connectionList;
 		let label = `${node.name},${node.value || ''}`;
 
@@ -53,46 +50,33 @@ export function toSigmaJson(tree) {
 			label = `${node.name},${node.string}`;
 		}
 
-		const id = Math.random().toString(36).slice(2);
+		const thisId = Math.random().toString(36).slice(2);
 
-		return {
-			id,
-			level: level,
-			index: levelIndex[level],
-			label,
-			connectionList
-		};
-	};
-
-	let traversal = tree.connectionList
-		.slice()
-		.map(v => toInternalNode(0, v));
-
-	while(traversal.length > 0) {
-		const node = traversal.shift();
-		nodes.push({
-			id: node.id,
-			x: node.index * 2,
-			y: node.level * 2,
-			label: node.label,
-			size: 1
-		});
-
-		//console.log(node);
-		const level = node.level + 1;
-
-		node.connectionList.forEach(v => {
-			const pendingNode = toInternalNode(level, v);
-			const id = pendingNode.id;
-
-			traversal.push(pendingNode);
-
+		if(prev) {
 			edges.push({
 				id: Math.random().toString(36).slice(2),
-				source: node.id,
-				target: id
+				source: prev,
+				target: thisId
 			});
+		}
+
+		nodes.push({
+			x: index * 2,
+			y: level * 4,
+			id: thisId,
+			label,
+			size: 2
 		});
+
+		for(let nextNode of connectionList) {
+			traverse(nextNode, level + 1, thisId);
+		}
+
+		index++
+	};
+
+	for(let statement of tree.connectionList) {
+		traverse(statement);
 	}
 
 	return {nodes, edges};

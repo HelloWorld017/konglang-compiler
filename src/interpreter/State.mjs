@@ -70,6 +70,8 @@ class State extends EventEmitter {
 			value = await this.getUserInput();
 		} else {
 			value = this.memory.get(index);
+
+			if(value === undefined) value = 0;
 		}
 
 		if(this.debug) console.log(`[Interpreter, MemGet] Get ${index}, Value: ${value}`);
