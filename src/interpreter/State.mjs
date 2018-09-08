@@ -42,13 +42,18 @@ class State extends EventEmitter {
 	}
 
 	async getUserInput() {
-		if(this.inputQueue.length > 0) return this.inputQueue.pop();
+		if(this.inputQueue.length > 0) return this.inputQueue.shift();
 
 		await new Promise(resolve => this.on('data', resolve));
 		return this.inputQueue.shift();
 	}
 
 	set(index, value) {
+		if(value > 255) {
+			const err = new Error(`Invalid operation: expected integer in range (0, 255), got: ${value}`);
+			throw err;
+		}
+		
 		if(this.debug) console.log(`[Interpreter, MemSet] Set ${index} => ${value}`);
 
 		if(index === 'Hash') {

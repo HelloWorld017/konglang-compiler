@@ -1,0 +1,27 @@
+<html>
+	<head>
+		<title>Tree Viewer</title>
+		<style type="text/css">
+			#container {
+				width: 100vw;
+				height: 100vh;
+				position: fixed;
+				top: 0;
+				left: 0;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="container"></div>
+		<script src="./scripts/sigma.min.js"></script>
+		<script src="./scripts/sigma.parsers.json.min.js"></script>
+		<script>
+			sigma.parsers.json('data.json', {
+				container: 'container',
+				settings: {
+					defaultNodeColor: '#ec5148'
+				}
+			});
+		</script>
+	</body>
+</html>

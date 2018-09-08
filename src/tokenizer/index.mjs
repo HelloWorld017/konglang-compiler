@@ -20,6 +20,8 @@ const tokenizers = [
 ];
 
 const tokenizeLine = (text, line, debug=false) => {
+	if(/^\s*\/\//.test(text)) return [];
+	
 	const tokens = [];
 	let originalText = text;
 
