@@ -1,4 +1,4 @@
-import NodeStub from "./NodeStub";
+import NodeStub from "./NodeStub.mjs";
 
 class NodeLoop extends NodeStub {
 	constructor(token) {

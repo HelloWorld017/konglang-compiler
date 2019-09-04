@@ -1,7 +1,7 @@
-import Token from "./Token";
-import TokenizerOperator from "./TokenizerOperator";
-import TokenizerSingle from "./TokenizerSingle";
-import TokenizerRegex from "./TokenizerRegex";
+import Token from "./Token.mjs";
+import TokenizerOperator from "./TokenizerOperator.mjs";
+import TokenizerSingle from "./TokenizerSingle.mjs";
+import TokenizerRegex from "./TokenizerRegex.mjs";
 
 const tokenizers = [
 	new TokenizerRegex('NewLine', /^(\r\n|\r|\n)/),

@@ -1,7 +1,7 @@
-import {getInvalidTokenError} from "../utils";
+import {getInvalidTokenError} from "../utils/index.mjs";
 
-import NodeLoop from "../nodes/NodeLoop";
-import Parser from "./Parser";
+import NodeLoop from "../nodes/NodeLoop.mjs";
+import Parser from "./Parser.mjs";
 
 class ParserLoop extends Parser {
 	constructor() {

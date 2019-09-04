@@ -1,4 +1,4 @@
-import Node from "./Node";
+import Node from "./Node.mjs";
 
 class NodeExpression extends Node {
 	constructor(token) {

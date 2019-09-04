@@ -1,9 +1,9 @@
 import fs from "fs";
-import Interpreter from "./interpreter/Interpreter";
-import parse from "./parser";
+import Interpreter from "./interpreter/Interpreter.mjs";
+import parse from "./parser/index.mjs";
 import commander from "commander";
-import tokenize from "./tokenizer";
-import {toSigmaJson} from "./utils";
+import tokenize from "./tokenizer/index.mjs";
+import {toSigmaJson} from "./utils/index.mjs";
 
 commander
 	.version('2.2.22')

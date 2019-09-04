@@ -1,4 +1,4 @@
-import NodeStub from "./NodeStub";
+import NodeStub from "./NodeStub.mjs";
 
 class Program extends NodeStub {
 	constructor() {

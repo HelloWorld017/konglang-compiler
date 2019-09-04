@@ -1,5 +1,5 @@
-import Token from "./Token";
-import Tokenizer from "./Tokenizer";
+import Token from "./Token.mjs";
+import Tokenizer from "./Tokenizer.mjs";
 
 class TokenizerRegex extends Tokenizer {
 	constructor(name, regex) {

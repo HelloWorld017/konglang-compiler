@@ -1,4 +1,4 @@
-import State from "./State";
+import State from "./State.mjs";
 
 class Interpreter {
 	constructor(program, debug=false) {

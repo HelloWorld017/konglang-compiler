@@ -1,8 +1,8 @@
-import {getInvalidTokenError} from "../utils";
+import {getInvalidTokenError} from "../utils/index.mjs";
 
-import NodeHash from "../nodes/NodeHash";
-import NodeReceiver from "../nodes/NodeReceiver";
-import Parser from "./Parser";
+import NodeHash from "../nodes/NodeHash.mjs";
+import NodeReceiver from "../nodes/NodeReceiver.mjs";
+import Parser from "./Parser.mjs";
 
 class ParserReceiver extends Parser {
 	constructor() {

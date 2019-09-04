@@ -1,4 +1,4 @@
-import Node from "./Node";
+import Node from "./Node.mjs";
 
 class NodeNumber extends Node {
 	constructor(token) {

@@ -1,9 +1,9 @@
-import {getInvalidTokenError} from "../utils";
+import {getInvalidTokenError} from "../utils/index.mjs";
 
-import NodeExpression from "../nodes/NodeExpression";
-import NodeNumber from "../nodes/NodeNumber";
-import NodeOperator from "../nodes/NodeOperator";
-import Parser from "./Parser";
+import NodeExpression from "../nodes/NodeExpression.mjs";
+import NodeNumber from "../nodes/NodeNumber.mjs";
+import NodeOperator from "../nodes/NodeOperator.mjs";
+import Parser from "./Parser.mjs";
 
 class ParserExpression extends Parser {
 	constructor() {

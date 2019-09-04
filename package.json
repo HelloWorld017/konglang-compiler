@@ -2,7 +2,11 @@
   "name": "konglang",
   "version": "2.2.22",
   "description": "A standard compiler for kong-lang. A standard compiler for kong-lang.",
-  "main": "src/index.mjs",
+  "main": "src/cli.mjs",
+  "type": "module",
+  "bin": {
+    "kong": "src/cli.mjs"
+  },
   "directories": {
     "test": "test"
   },
@@ -26,10 +30,11 @@
   "homepage": "https://github.com/HelloWorld017/konglang-compiler#readme",
   "dependencies": {
     "chalk": "^2.4.0",
+    "commander": "^3.0.1",
     "split": "^1.0.1",
     "string-width": "^2.1.1"
   },
   "devDependencies": {
-    "ava": "^0.25.0"
+    "ava": "^2.3.0"
   }
 }

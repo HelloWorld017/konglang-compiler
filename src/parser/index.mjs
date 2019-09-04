@@ -1,9 +1,9 @@
-import Program from "../nodes/Program";
-import ParserAssignment from "./ParserAssignment";
-import ParserExpression from "./ParserExpression";
-import ParserLoop from "./ParserLoop";
-import ParserReceiver from "./ParserReceiver";
-import ParserTransmitter from "./ParserTransmitter";
+import Program from "../nodes/Program.mjs";
+import ParserAssignment from "./ParserAssignment.mjs";
+import ParserExpression from "./ParserExpression.mjs";
+import ParserLoop from "./ParserLoop.mjs";
+import ParserReceiver from "./ParserReceiver.mjs";
+import ParserTransmitter from "./ParserTransmitter.mjs";
 
 export default function parse(tokens, debug=false) {
 	// Because parsers are ordered, should use map.
